@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <import file="Js.jquery,Js.weibo" />
+  <import type='css' file="Css.weibo" />
+ 
+  <title>xxx微博</title>
+ </head>
+ <body>
+		<div class='header'>
+			<button id='new' class='new  btn-head'>发布</button>
+			<button id='login' class='login btn-head' value='<?php echo $login; ?>'><?php echo $user;?></button>
+			<a href="{:U('loginout')}"><button id='loginout' class='loginout btn-head'>退出</button></a>
+		</div>
+		<div class='body'>
+			<div class='main'>
+				<?php
+				foreach($message as $k=>$v){
+					
+				?>
+				<div class='weibo'>
+					<div class='content'><?php echo $v['content'];?></div>
+					<div class='bar'>
+						<button value='<?php echo $v["id"];?>' class='btn-main del'>删除</button>
+						<button class='btn-main reviews-btn'>评论</button>
+						<button value='<?php echo $v["id"];?>' class='btn-main hits'>赞(<span><?php echo $v["hits"];?></span>)</button>
+					</div>
+					<div class='new-reviews'>
+						<button class='btn-box '><?php echo $user;?></button><hr/>
+						评论内容:<textarea class='new-reviews-content' cols='75' rows='6'></textarea><br/><br/>
+						<button class='btn-box new-reviews-btn' value='<?php echo $v["id"];?>'>评论</button>
+					</div>
+					<?php
+					foreach($v['reviews'] as $rows){
+					?>
+					<div class='reviews'>
+						<div><?php echo date('Y-m-d H:m',$rows['rtime']);?></div>
+						<hr/>
+						<div><?php echo $rows['rcontent']; ?></div>
+					</div>
+					<?php } ?>
+				</div>
+				<?php } ?>
+			</div>
+		</div>
+		<div id='new-weibo' class='box'>
+			<textarea class='new-weibo-content' cols='60' rows='10'></textarea><br/>
+			<button id='new-weibo-btn' class='btn-box'>发布</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id='no-new-weibo' class='btn-box' >取消</button>
+		</div>
+		<div id='login-box' class='box'>
+			<form  action='{:U("login")}' method='post'>
+				用户名:<input name='user'/><br/><br/>
+				密&nbsp;&nbsp;&nbsp;码:<input type='password' name='password'/><br/><br/>
+				&nbsp;&nbsp;&nbsp;<input id='submit' type='submit' value='登录'  class='btn-box' />&nbsp;&nbsp;&nbsp;
+				<input id='no-login' type='button' value='取消'  class='btn-box'/>
+			</form>
+		</div>
+		<div class='toolbar'>
+			<a href='#' class='toolbar_item toolbar_item_weixin'>
+				<span class='toolbar_layer'></span>
+			</a>
+			<a href='#' class='toolbar_item toolbar_item_feedback'></a>
+			<a href='#' class='toolbar_item toolbar_item_app'>
+				<span class='toolbar_layer'></span>
+			</a>
+			<a href='#' class='toolbar_item toolbar_item_top'></a>
+		</div>
+		<div id='cover'></div>
+		<div class='more'>
+			<button id='more' class='btn-more' value=1>加载更多</button>
+		</div>
+		<input id='hidden' type='hidden' value=0 />
+ </body>
+ <script>
+	/*
+	function delAspExtension(str){
+	  var reg = /\.html$/;
+	  return str.replace(reg,'');
+	}
+	var $url="{:U('/Ajax')}";
+	delAspExtension($url);
+	*/
+	var $newmessage="{:U('/Ajax/newmessage')}";
+	var $del="{:U('/Ajax/del')}";
+	var $getmore="{:U('/Ajax/getmore')}";
+	var $hits="{:U('/Ajax/hits')}";
+	var $newreviews="{:U('/Ajax/newreviews')}";
+ </script>
+</html>
